@@ -5,13 +5,10 @@
     "name": "Tetsuo Nakamura",
     "email": "tetsuo.nakamura@gmail.com"
   },
-  "metadata": {
-    "pluginRoot": "./plugins"
-  },
   "plugins": [
     {
       "name": "document-tools",
-      "source": "document-tools",
+      "source": "./plugins/document-tools",
       "description": "ドキュメントの作成やレビューを支援する skill 集。draft-service-brief などを含む。"
     }
   ]
