@@ -29,7 +29,7 @@ agent-plugins/                                    # repo (git 管理単位)
 
 ## 命名規約 (すべて必須)
 
-- マーケットプレイス manifest は `.claude-plugin/marketplace.json` に置き、`metadata.pluginRoot: "./plugins"` を指定する。各 plugin エントリの `source` は `<plugin-name>` の 1 語で書ける
+- マーケットプレイス manifest は `.claude-plugin/marketplace.json` に置く。各 plugin エントリの `source` は `./plugins/<plugin-name>` 形式で書く (公式仕様上 Relative path 型の string は `./` で始まる必要がある。`metadata.pluginRoot` の糖衣は使わない — Claude Code のバージョンによっては「source type not supported」エラーになる)
 - 各プラグイン manifest は `plugins/<plugin-name>/.claude-plugin/plugin.json`
 - skill は `plugins/<plugin-name>/skills/<skill-name>/SKILL.md` の階層固定。ファイル名 `SKILL.md` は変更不可。skill 付随のリソースは同ディレクトリ配下の `references/` などに置く
 - hook はプラグイン単位で 1 つの `hooks/hooks.json` に集約する。skill 別のサブディレクトリは切らない (skill 別の hook が必要なら matcher とスクリプト名で分ける)
