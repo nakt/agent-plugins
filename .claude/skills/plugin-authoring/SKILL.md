@@ -44,7 +44,8 @@ agent-plugins/                                    # repo (git 管理単位)
 
 1. `plugins/<plugin-name>/.claude-plugin/plugin.json` を作成する。`version` は `"0.1.0"` で開始
 2. 主 skill を `plugins/<plugin-name>/skills/<skill-name>/SKILL.md` に作成する (`references/` があれば同じディレクトリ配下に)
-3. `.claude-plugin/marketplace.json` の `plugins[]` に 1 エントリ追加する。フィールドは `name` / `source` / `description` の 3 つが最低限 (`source` は `<plugin-name>` の 1 語で書ける)
+3. `.claude-plugin/marketplace.json` の `plugins[]` に 1 エントリ追加する。フィールドは `name` / `source` / `description` の 3 つが最低限。`source` は `./plugins/<plugin-name>` の形で書く (先頭 `./` を省略しない)
+4. リポジトリ直下の `README.md` の「プラグイン一覧」表に 1 行追加する (必須)
 
 plugin.json のテンプレート:
 
@@ -78,6 +79,7 @@ plugin.json のテンプレート:
 1. 対象要素を修正する
 2. plugin.json の `version` を PATCH bump する (必須、ただし trivial 変更は省略可。後述の「バージョンルール」を参照)
 3. `marketplace.json` 側の `description` 等を触ったときのみ marketplace.json も同時に修正する (plugin.json 側の変更だけなら marketplace.json は触らない)
+4. `marketplace.json` の `description` を変更した場合は、リポジトリ直下の `README.md` の「プラグイン一覧」表の該当行の説明も揃える (必須)
 
 ## 削除ワークフロー
 
@@ -91,6 +93,7 @@ plugin.json のテンプレート:
 - `plugins/<name>/` ディレクトリを削除
 - `.claude-plugin/marketplace.json` の `plugins[]` から該当エントリを削除
 - 同 marketplace.json の `renames` フィールドに `{"<name>": null}` を追記して、既存ユーザの migration を担保する
+- リポジトリ直下の `README.md` の「プラグイン一覧」表から該当行を削除する (必須)
 
 renames の例:
 
@@ -141,4 +144,5 @@ Anthropic 公式の `plugin-dev` バンドルを利用する。以下の 7 skill
 3. 命名はすべて kebab-case、`SKILL.md` や `hooks.json` などのファイル名は公式規約に従う
 4. プラグイン内のファイル参照は `${CLAUDE_PLUGIN_ROOT}` を使う
 5. 何かを変更したら plugin.json の `version` を必ず bump する (trivial 変更は例外)
-6. 独自の慣例を追加しない。ディレクトリ規約・マニフェスト形式は Claude Code 公式仕様に従う
+6. プラグインを追加・削除、または marketplace.json 側の `description` を変更したら、リポジトリ直下の `README.md` の「プラグイン一覧」表も必ず追随させる
+7. 独自の慣例を追加しない。ディレクトリ規約・マニフェスト形式は Claude Code 公式仕様に従う
