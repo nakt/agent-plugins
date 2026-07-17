@@ -1,0 +1,9 @@
+{
+  "name": "document-tools",
+  "description": "ドキュメントの作成やレビューを支援する skill 集。draft-service-brief などを含む。",
+  "version": "0.1.0",
+  "author": {
+    "name": "Tetsuo Nakamura",
+    "email": "tetsuo.nakamura@gmail.com"
+  }
+}

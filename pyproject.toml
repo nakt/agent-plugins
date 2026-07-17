@@ -1,0 +1,11 @@
+[project]
+name = "agent-plugins"
+version = "0.1.0"
+description = "Personal Claude Code plugin marketplace (nakt-tools)"
+requires-python = ">=3.12"
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.6.0",
+]
