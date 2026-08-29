@@ -1,0 +1,8 @@
+{
+  "name": "typescript-native-lsp",
+  "description": "TypeScript 7 のネイティブ LSP (tsc --lsp --stdio) を Claude Code に接続する。",
+  "author": {
+    "name": "Tetsuo Nakamura",
+    "email": "tetsuo.nakamura@gmail.com"
+  }
+}
