@@ -1,6 +1,6 @@
 ---
 name: plugin-authoring
-description: この agent-plugins repo (nakt-tools マーケットプレイス) で、プラグインの追加・機能追加・更新・削除を行うときのワークフローと命名規約、ディレクトリ構成、plugin.json の version bump ルールを提供する skill。「プラグインを追加したい」「新しい skill を足したい」「plugin.json の version をどう上げる」「プラグインを削除したい」「hooks.json をどこに置く」といった依頼で使う。他リポジトリの Claude Code プラグイン開発全般 (公式 plugin-dev バンドルがカバーする一般的な作法) には使わない。
+description: この agent-plugins repo (nakt-tools マーケットプレイス) で、プラグインの追加・機能追加・更新・削除を行うときのワークフローと命名規約、ディレクトリ構成、plugin.json の version 運用ルールを提供する skill。「プラグインを追加したい」「新しい skill を足したい」「plugin.json の version をどう上げる」「プラグインを削除したい」「hooks.json をどこに置く」といった依頼で使う。他リポジトリの Claude Code プラグイン開発全般 (公式 plugin-dev バンドルがカバーする一般的な作法) には使わない。
 ---
 
 # plugin-authoring
@@ -42,7 +42,7 @@ agent-plugins/                                    # repo (git 管理単位)
 
 新しいプラグインを追加する手順:
 
-1. `plugins/<plugin-name>/.claude-plugin/plugin.json` を作成する。`version` は `"0.1.0"` で開始
+1. `plugins/<plugin-name>/.claude-plugin/plugin.json` を作成する。`version` は書かない (後述の「バージョンルール」を参照)
 2. 主 skill を `plugins/<plugin-name>/skills/<skill-name>/SKILL.md` に作成する (`references/` があれば同じディレクトリ配下に)
 3. `.claude-plugin/marketplace.json` の `plugins[]` に 1 エントリ追加する。フィールドは `name` / `source` / `description` の 3 つが最低限。`source` は `./plugins/<plugin-name>` の形で書く (先頭 `./` を省略しない)
 4. リポジトリ直下の `README.md` の「プラグイン一覧」表に 1 行追加する (必須)
@@ -53,7 +53,6 @@ plugin.json のテンプレート:
 {
   "name": "<plugin-name>",
   "description": "<1 文で>",
-  "version": "0.1.0",
   "author": {
     "name": "Tetsuo Nakamura",
     "email": "tetsuo.nakamura@gmail.com"
@@ -70,23 +69,21 @@ plugin.json のテンプレート:
 - command 追加: `plugins/<name>/commands/<command-name>.md`
 - hook 追加: `plugins/<name>/hooks/hooks.json` に entry を追記。スクリプトは `plugins/<name>/hooks/scripts/`
 
-いずれの場合も plugin.json の `version` を MINOR bump する (必須)。
+plugin.json は触らない (`version` を書かない運用のため bump も不要)。
 
 ## 更新ワークフロー (既存要素の修正)
 
 既存の skill / agent / command / hook / manifest の中身を修正するとき:
 
 1. 対象要素を修正する
-2. plugin.json の `version` を PATCH bump する (必須、ただし trivial 変更は省略可。後述の「バージョンルール」を参照)
-3. `marketplace.json` 側の `description` 等を触ったときのみ marketplace.json も同時に修正する (plugin.json 側の変更だけなら marketplace.json は触らない)
-4. `marketplace.json` の `description` を変更した場合は、リポジトリ直下の `README.md` の「プラグイン一覧」表の該当行の説明も揃える (必須)
+2. `marketplace.json` 側の `description` 等を触ったときのみ marketplace.json も同時に修正する (plugin.json 側の変更だけなら marketplace.json は触らない)
+3. `marketplace.json` の `description` を変更した場合は、リポジトリ直下の `README.md` の「プラグイン一覧」表の該当行の説明も揃える (必須)
 
 ## 削除ワークフロー
 
 ### skill 単体を削除する
 
 - `plugins/<name>/skills/<skill>/` ディレクトリを削除
-- plugin.json の `version` を MINOR bump
 
 ### プラグインを丸ごと削除する
 
@@ -107,16 +104,15 @@ renames の例:
 }
 ```
 
-## バージョンルール (bump は必須)
+## バージョンルール (`version` は書かない)
 
-- plugin.json の `version` は SemVer (MAJOR.MINOR.PATCH)
-- 0.x 期は MINOR / PATCH のみ運用する。1.0 リリースで MAJOR 解禁
-- MINOR bump の対象: 新 skill / agent / command / hook / MCP server の追加、既存要素の削除、非互換な仕様変更
-- PATCH bump の対象: 既存要素の意味を変える小修正 (文言の意味変更、微改良、コマンド / オプション追加など)
-- trivial 変更 (typo 修正、リンク切れ修正、コメント整形など、install 側の使用感に影響しない修正) は bump 省略可
-- marketplace.json の plugin エントリには `version` を書かない (plugin.json 側に一元化する。公式仕様上、plugin.json 側の `version` が marketplace エントリの `version` より優先される)
+- plugin.json にも marketplace.json の plugin エントリにも `version` を書かない
+- 公式仕様上 `version` は Optional で、省略するとマーケットプレイスリポジトリの commit sha が version として扱われる (`~/.claude/plugins/installed_plugins.json` で確認できる。公式の context7 / skill-creator が実例)
+- 省略すると、このリポジトリにコミットするだけで install ユーザに更新が届く。bump 忘れによる配布漏れが構造的に起きない
+- 副作用として、あるプラグインに無関係なコミットでも `version` (= repo の sha) が変わり、全プラグインが更新対象として扱われる。個人利用が主目的のこの repo では許容する
+- 例外として、意図的に更新の配布を止めたいときだけ `version` を書いて pin する。書いた場合は bump するまで更新が届かないので、pin を外すタイミングもあわせて決めておく
 
-`version` の文字列が変わらない限り、install ユーザに更新は配布されない。「必要な変更をしたのに bump 忘れ」は install ユーザ側で気付けないので、変更したら必ず bump する (trivial 変更は例外)。
+`version` を書くと、その文字列が変わらない限り install ユーザに更新は配布されない。「必要な変更をしたのに bump 忘れ」は install ユーザ側で気付けないため、既定では書かない。
 
 ## 開発支援
 
@@ -143,6 +139,6 @@ Anthropic 公式の `plugin-dev` バンドルを利用する。以下の 7 skill
 2. プラグイン同士は独立させる。他プラグインへの依存や相互参照を持ち込まない
 3. 命名はすべて kebab-case、`SKILL.md` や `hooks.json` などのファイル名は公式規約に従う
 4. プラグイン内のファイル参照は `${CLAUDE_PLUGIN_ROOT}` を使う
-5. 何かを変更したら plugin.json の `version` を必ず bump する (trivial 変更は例外)
+5. plugin.json に `version` を書かない。commit sha が version になるので、コミットすれば更新が届く
 6. プラグインを追加・削除、または marketplace.json 側の `description` を変更したら、リポジトリ直下の `README.md` の「プラグイン一覧」表も必ず追随させる
 7. 独自の慣例を追加しない。ディレクトリ規約・マニフェスト形式は Claude Code 公式仕様に従う
