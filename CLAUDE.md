@@ -14,7 +14,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## 開発ルール
 
-プラグインの追加・機能追加・更新・削除の作法、命名規約、ディレクトリ構成、`plugin.json` の version bump ルールは `.claude/skills/plugin-authoring/` に集約している。ユーザーの発話に応じて Claude Code が自動起動する。
+プラグインの追加・機能追加・更新・削除の作法、命名規約、ディレクトリ構成、`plugin.json` の version 運用ルールは `.claude/skills/plugin-authoring/` に集約している。ユーザーの発話に応じて Claude Code が自動起動する。
 
 ## 公式リファレンス
 

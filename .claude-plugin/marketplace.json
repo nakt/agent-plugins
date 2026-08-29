@@ -10,6 +10,11 @@
       "name": "document-tools",
       "source": "./plugins/document-tools",
       "description": "ドキュメントの作成やレビューを支援する skill 集。draft-service-brief などを含む。"
+    },
+    {
+      "name": "typescript-native-lsp",
+      "source": "./plugins/typescript-native-lsp",
+      "description": "TypeScript 7 のネイティブ LSP (tsc --lsp --stdio) を Claude Code に接続する。"
     }
   ]
 }

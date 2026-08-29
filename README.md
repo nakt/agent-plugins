@@ -23,9 +23,10 @@ Claude Code 上で、このリポジトリをマーケットプレイスとし�
 
 ## プラグイン一覧
 
-| プラグイン      | 説明                                                                                     | source                       |
-| --------------- | ---------------------------------------------------------------------------------------- | ---------------------------- |
-| document-tools  | ドキュメントの作成やレビューを支援する skill 集。draft-service-brief などを含む。         | `./plugins/document-tools`   |
+| プラグイン            | 説明                                                                              | source                            |
+| --------------------- | --------------------------------------------------------------------------------- | --------------------------------- |
+| document-tools        | ドキュメントの作成やレビューを支援する skill 集。draft-service-brief などを含む。 | `./plugins/document-tools`        |
+| typescript-native-lsp | TypeScript 7 のネイティブ LSP (tsc --lsp --stdio) を Claude Code に接続する。     | `./plugins/typescript-native-lsp` |
 
 ## 開発 / コントリビュート
 
