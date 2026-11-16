@@ -1,0 +1,9 @@
+{
+  "name": "timeline",
+  "description": "サブエージェントの起動・ツール呼び出し・タスクのバッチ・コミットを、git log --graph 風のペインでチャットの横に表示する mod。",
+  "author": {
+    "name": "Tetsuo Nakamura",
+    "email": "tetsuo.nakamura@gmail.com"
+  },
+  "types": "./types/index.d.ts"
+}

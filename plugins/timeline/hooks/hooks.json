@@ -1,0 +1,4 @@
+{
+  "description": "timeline mod の hooks module",
+  "modules": ["./register.ts"]
+}

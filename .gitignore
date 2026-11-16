@@ -59,3 +59,6 @@ secrets.yml
 .claude/**
 !.claude/skills/
 !.claude/skills/**
+
+# Mods (Claude Code が --plugin-dir で読み込んだときに生成する型定義)
+plugins/*/.claude-plugin/types/
