@@ -23,10 +23,11 @@ Claude Code 上で、このリポジトリをマーケットプレイスとし�
 
 ## プラグイン一覧
 
-| プラグイン            | 説明                                                                              | source                            |
-| --------------------- | --------------------------------------------------------------------------------- | --------------------------------- |
-| document-tools        | ドキュメントの作成やレビューを支援する skill 集。draft-service-brief などを含む。 | `./plugins/document-tools`        |
-| typescript-native-lsp | TypeScript 7 のネイティブ LSP (tsc --lsp --stdio) を Claude Code に接続する。     | `./plugins/typescript-native-lsp` |
+| プラグイン            | 説明                                                                                                                         | source                            |
+| --------------------- | ---------------------------------------------------------------------------------------------------------------------------- | --------------------------------- |
+| document-tools        | ドキュメントの作成やレビューを支援する skill 集。draft-service-brief などを含む。                                            | `./plugins/document-tools`        |
+| typescript-native-lsp | TypeScript 7 のネイティブ LSP (tsc --lsp --stdio) を Claude Code に接続する。                                                | `./plugins/typescript-native-lsp` |
+| timeline              | サブエージェントの起動・ツール呼び出し・タスクのバッチ・コミットを、git log --graph 風のペインでチャットの横に表示する mod。 | `./plugins/timeline`              |
 
 ## 開発 / コントリビュート
 

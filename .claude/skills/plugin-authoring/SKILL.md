@@ -22,8 +22,11 @@ agent-plugins/                                    # repo (git 管理単位)
         ├── agents/*.md                           # agent (任意)
         ├── commands/*.md                         # command (任意)
         ├── hooks/                                # hook (任意、プラグイン単位で 1 箇所)
-        │   ├── hooks.json
+        │   ├── hooks.json                        # mod なら "modules" で hooks module を指す
+        │   ├── register.ts                       # mod の hooks module (任意)
         │   └── scripts/                          # hook から呼ぶスクリプト
+        ├── types/index.d.ts                      # mod が $.state を使うときの型宣言 (任意)
+        ├── tests/*.test.ts                       # mod のテスト (任意、claude plugin test)
         └── scripts/                              # プラグイン全体で共有するスクリプト (任意)
 ```
 
@@ -68,6 +71,8 @@ plugin.json のテンプレート:
 - agent 追加: `plugins/<name>/agents/<agent-name>.md`
 - command 追加: `plugins/<name>/commands/<command-name>.md`
 - hook 追加: `plugins/<name>/hooks/hooks.json` に entry を追記。スクリプトは `plugins/<name>/hooks/scripts/`
+- mod 追加: `plugins/<name>/hooks/hooks.json` の `modules` に hooks module (例: `./register.ts`) を 1 つ書く。`$.state` を使うなら `types/index.d.ts` に宣言し、plugin.json の `types` で指す。`claude plugin validate` と `claude plugin test` を通す。作法は公式の [Mods](https://code.claude.com/docs/en/plugins/mods/overview) に従う
+- mod を `--plugin-dir` で読み込むと Claude Code が `.claude-plugin/types/` に型定義を生成する。バージョンごとに変わるので `.gitignore` で除外している
 
 plugin.json は触らない (`version` を書かない運用のため bump も不要)。
 
