@@ -66,13 +66,9 @@ export function register(on: On) {
         immediate: true,
       })
     } catch {
-      // 名前が使えないときもペインは開く
+      // 名前が使えなくても記録は続ける
     }
-    try {
-      await $.ui.open({ id: PANE, title: 'timeline' })
-    } catch {
-      // すでに開いている
-    }
+    // ペインは開かない。/timeline で開く
     return result
   })
 
